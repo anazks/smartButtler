@@ -34,6 +34,15 @@ Time:{
     type:String,
     required:true,
 },
+Date:{
+    type:Date,
+    required:true
+},
+response:{
+    type:Date,
+    required:true,
+    default:"pending"
+}
 
 })
 

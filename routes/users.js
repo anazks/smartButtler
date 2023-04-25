@@ -77,4 +77,13 @@ router.get('/orderSuccess',(req,res)=>{
 router.post('/success',(req,res)=>{
   res.redirect('/users/')
 })
+router.get('/getOrderStatus',async(req,res)=>{
+  try {
+      let statusData = await orderModel.find({staus:"pending"})
+      console.log(statusData)
+      res.render("user/orderStatus",{statusData})
+  } catch (error) {
+    
+  }
+})
 module.exports = router;

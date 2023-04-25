@@ -4,6 +4,7 @@ const dishmodel = require('../models/dishmodel');
 const staffmodel = require('../models/staffmodel');
 const usermodel = require('../models/usermodel');
 const categorymodel = require('../models/categorymodel');
+const OrderModel = require('../models/OrderModel')
 var router = express.Router();
 
 /* GET home page. */
@@ -176,6 +177,35 @@ router.put('/availupdate/:id',function(req,res){
     }
  });
 });
+router.get('/getorder',async(req,res)=>{
+      try {
+            var orders = await OrderModel.find();
+            console.log(orders,"------------------")
+            res.render('admin/orders',{orders})
+      } catch (error) {
+        console.log(error)
+      }
+})
+
+router.get('/approve/:id',async(req,res)=>{
+  try {
+    let id = req.params.id;
+        var orders = await OrderModel.findByIdAndUpdate({_id:id},{$set :{status:"preparing.."}});
+       res.redirect('/getorder')
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+router.get('/sentTo/:id',async(req,res)=>{
+  try {
+    let id = req.params.id;
+        var orders = await OrderModel.findByIdAndUpdate({_id:id},{$set :{status:"reaching Now.."}});
+       res.redirect('/getorder')
+  } catch (error) {
+    console.log(error)
+  }
+})
 //   let dish_id=req.params.id;
 //   let e = document.getElementById("selectVal");
 // let value = e.value;
